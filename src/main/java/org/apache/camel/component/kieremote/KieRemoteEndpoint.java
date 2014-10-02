@@ -18,16 +18,17 @@ package org.apache.camel.component.kieremote;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.impl.DefaultEndpoint;
+import org.hornetq.jms.client.HornetQQueue;
 import org.kie.services.client.api.RemoteRestRuntimeEngineFactory;
 import org.kie.services.client.api.RemoteRuntimeEngineFactory;
 import org.kie.services.client.api.builder.RemoteJmsRuntimeEngineBuilder;
 import org.kie.services.client.api.builder.RemoteRestRuntimeEngineBuilder;
+import org.kie.services.client.api.command.RemoteConfiguration;
 import org.kie.services.client.api.command.RemoteRuntimeEngine;
 
 public class KieRemoteEndpoint extends DefaultEndpoint {
@@ -38,14 +39,21 @@ public class KieRemoteEndpoint extends DefaultEndpoint {
         super(uri, component);
         this.configuration = configuration;
 
-        if ("http".equalsIgnoreCase(configuration.getConnectionURL().getProtocol())) {
+        if (configuration.getConnectionURL() != null) {
             RemoteRestRuntimeEngineBuilder engineBuilder = RemoteRestRuntimeEngineFactory.newRestBuilder();
-            engineBuilder
-                    .addUserName(configuration.getUserName())
-                    .addPassword(configuration.getPassword())
-                    .addUrl(configuration.getConnectionURL())
-                    .addDeploymentId(configuration.getDeploymentId());
 
+            if (configuration.getUserName() != null) {
+                engineBuilder.addUserName(configuration.getUserName());
+            }
+            if (configuration.getPassword() != null) {
+                engineBuilder.addPassword(configuration.getPassword());
+            }
+            if (configuration.getDeploymentId() != null) {
+                engineBuilder.addDeploymentId(configuration.getDeploymentId());
+            }
+            if (configuration.getConnectionURL() != null) {
+                engineBuilder.addUrl(configuration.getConnectionURL());
+            }
             if (configuration.getProcessInstanceId() != null) {
                 engineBuilder.addProcessInstanceId(configuration.getProcessInstanceId());
             }
@@ -59,42 +67,78 @@ public class KieRemoteEndpoint extends DefaultEndpoint {
             RemoteRuntimeEngineFactory engineFactory = engineBuilder.buildFactory();
             runtimeEngine = engineFactory.newRuntimeEngine();
 
-        } else if ("jms".equalsIgnoreCase(configuration.getConnectionURL().getProtocol())) {
+        } else {
             RemoteJmsRuntimeEngineBuilder engineBuilder = RemoteRestRuntimeEngineFactory.newJmsBuilder();
-            engineBuilder
-                    .addUserName(configuration.getUserName())
-                    .addPassword(configuration.getPassword())
-                    .addHostName(configuration.getConnectionURL().getHost())
-                    .addJmsConnectorPort(configuration.getConnectionURL().getPort())
 
-                    .addDeploymentId(configuration.getDeploymentId())
-                    .addProcessInstanceId(configuration.getProcessInstanceId())
-                    .addTimeout(configuration.getTimeout())
-                    .addExtraJaxbClasses(configuration.getExtraJaxbClasses())
+            if (configuration.getUserName() != null) {
+                engineBuilder.addUserName(configuration.getUserName());
+            }
+            if (configuration.getPassword() != null) {
+                engineBuilder.addPassword(configuration.getPassword());
+            }
+            if (configuration.getDeploymentId() != null) {
+                engineBuilder.addDeploymentId(configuration.getDeploymentId());
+            }
+            if (configuration.getHost() != null) {
+                engineBuilder.addHostName(configuration.getHost());
+            }
+            if (configuration.getPort() != null) {
+                engineBuilder.addJmsConnectorPort(configuration.getPort());
+            }
 
-                    .addConnectionFactory(configuration.getConnectionFactory())
-                    .addJbossServerHostName(configuration.getJbossServerHostName())
-                    .addKieSessionQueue(configuration.getKieSessionQueue())
-                    .addResponseQueue(configuration.getResponseQueue())
-                    .addTaskServiceQueue(configuration.getTaskServiceQueue())
-                    .addRemoteInitialContext(configuration.getRemoteInitialContext())
+            //options
+            if (configuration.getProcessInstanceId() != null) {
+                engineBuilder.addProcessInstanceId(configuration.getProcessInstanceId());
+            }
+            if (configuration.getTimeout() != null) {
+                engineBuilder.addTimeout(configuration.getTimeout());
+            }
+            if (configuration.getExtraJaxbClasses() != null) {
+                engineBuilder.addExtraJaxbClasses(configuration.getExtraJaxbClasses());
+            }
+            if (configuration.getConnectionFactory() != null) {
+                engineBuilder.addConnectionFactory(configuration.getConnectionFactory());
+            }
+            if (configuration.getJbossServerHostName() != null) {
+                engineBuilder.addJbossServerHostName(configuration.getJbossServerHostName());
+            }
 
-                    .addTruststoreLocation(configuration.getTruststoreLocation())
-                    .addTruststorePassword(configuration.getTruststorePassword())
-                    .addKeystoreLocation(configuration.getKeystoreLocation())
-                    .addKeystorePassword(configuration.getKeystorePassword())
+            engineBuilder.addKieSessionQueue(toHornetQQueue(
+                    configuration.getSessionQueue() != null ? configuration.getSessionQueue() : RemoteConfiguration.SESSION_QUEUE_NAME));
+            engineBuilder.addResponseQueue(toHornetQQueue(
+                    configuration.getResponseQueue() != null ? configuration.getResponseQueue() : RemoteConfiguration.RESPONSE_QUEUE_NAME));
+            engineBuilder.addTaskServiceQueue(toHornetQQueue(
+                    configuration.getTaskServiceQueue() != null ? configuration.getTaskServiceQueue() : RemoteConfiguration.TASK_QUEUE_NAME));
 
-                    //  .doNotUseSsl()
-                    .useSsl(configuration.isUseSsl());
-                    if (configuration.isUseKeystoreAsTruststore()) {
-                        engineBuilder.useKeystoreAsTruststore();
-                    }
+            if (configuration.getRemoteInitialContext() != null) {
+                engineBuilder.addRemoteInitialContext(configuration.getRemoteInitialContext());
+            }
+            if (configuration.getTruststoreLocation() != null) {
+                engineBuilder.addTruststoreLocation(configuration.getTruststoreLocation());
+            }
+            if (configuration.getTruststorePassword() != null) {
+                engineBuilder.addTruststorePassword(configuration.getTruststorePassword());
+            }
+            if (configuration.getKeystoreLocation() != null) {
+                engineBuilder.addKeystoreLocation(configuration.getKeystoreLocation());
+            }
+            if (configuration.getKeystorePassword() != null) {
+                engineBuilder.addKeystorePassword(configuration.getKeystorePassword());
+            }
+            if (configuration.isUseSsl()) {
+                engineBuilder.useSsl(configuration.isUseSsl());
+            }
+            if (configuration.isUseKeystoreAsTruststore()) {
+                engineBuilder.useKeystoreAsTruststore();
+            }
 
             RemoteRuntimeEngineFactory engineFactory = engineBuilder.buildFactory();
             runtimeEngine = engineFactory.newRuntimeEngine();
-         } else {
-            throw new UnsupportedOperationException("protocol");
-        }
+         }
+    }
+
+    private HornetQQueue toHornetQQueue(String queueName) {
+        return new HornetQQueue(queueName);
     }
 
     public Producer createProducer() throws Exception {
@@ -102,7 +146,7 @@ public class KieRemoteEndpoint extends DefaultEndpoint {
     }
 
     public Consumer createConsumer(Processor processor) throws Exception {
-        throw new UnsupportedOperationException("Consumer not supported for KieRemote endpoint");
+        throw new UnsupportedOperationException("Consumer not supported for " + getClass().getSimpleName() + " endpoint");
     }
 
     public boolean isSingleton() {

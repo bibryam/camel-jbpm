@@ -462,7 +462,6 @@ public class KieRemoteProducer extends DefaultProducer {
             if (processInstance != null) {
                 getResultMessage(exchange).setHeader(KieRemoteConstants.PROCESS_INSTANCE_ID, processInstance.getId());
                 getResultMessage(exchange).setHeader(KieRemoteConstants.PROCESS_ID, processInstance.getProcessId());
-                getResultMessage(exchange).setHeader(KieRemoteConstants.PROCESS_NAME, processInstance.getProcessName());
                 getResultMessage(exchange).setHeader(KieRemoteConstants.STATE, processInstance.getState());
             }
         }

@@ -17,7 +17,6 @@
 package org.apache.camel.component.kieremote;
 
 import java.net.URL;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -37,7 +36,9 @@ public class KieRemoteConfiguration {
 
     @UriParam
     private String operation;
+    @UriParam
     private String key;
+    @UriParam
     private Objects value;
     private String processId;
     private Map<String, Object> parameters;
@@ -61,6 +62,8 @@ public class KieRemoteConfiguration {
     private String userName;
     private String password;
     private URL connectionURL;
+    private String host;
+    private Integer port;
     private String deploymentId;
     private Integer timeout;
     private Class[] extraJaxbClasses;
@@ -72,9 +75,9 @@ public class KieRemoteConfiguration {
     private boolean useKeystoreAsTruststore;
     private ConnectionFactory connectionFactory;
     private String jbossServerHostName;
-    private Queue KieSessionQueue;
-    private Queue responseQueue;
-    private Queue taskServiceQueue;
+    private String sessionQueue;
+    private String responseQueue;
+    private String taskServiceQueue;
     private InitialContext remoteInitialContext;
 
     public String getOperation() {
@@ -349,27 +352,27 @@ public class KieRemoteConfiguration {
         this.jbossServerHostName = jbossServerHostName;
     }
 
-    public Queue getKieSessionQueue() {
-        return KieSessionQueue;
+    public String getSessionQueue() {
+        return sessionQueue;
     }
 
-    public void setKieSessionQueue(Queue kieSessionQueue) {
-        KieSessionQueue = kieSessionQueue;
+    public void setSessionQueue(String sessionQueue) {
+        this.sessionQueue = sessionQueue;
     }
 
-    public Queue getResponseQueue() {
+    public String getResponseQueue() {
         return responseQueue;
     }
 
-    public void setResponseQueue(Queue responseQueue) {
+    public void setResponseQueue(String responseQueue) {
         this.responseQueue = responseQueue;
     }
 
-    public Queue getTaskServiceQueue() {
+    public String getTaskServiceQueue() {
         return taskServiceQueue;
     }
 
-    public void setTaskServiceQueue(Queue taskServiceQueue) {
+    public void setTaskServiceQueue(String taskServiceQueue) {
         this.taskServiceQueue = taskServiceQueue;
     }
 
@@ -379,6 +382,22 @@ public class KieRemoteConfiguration {
 
     public void setRemoteInitialContext(InitialContext remoteInitialContext) {
         this.remoteInitialContext = remoteInitialContext;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public Integer getPort() {
+        return port;
+    }
+
+    public void setPort(Integer port) {
+        this.port = port;
     }
 }
 

@@ -22,12 +22,18 @@ import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore("TODO")
-public class KieRemoteComponentTest extends CamelTestSupport {
+
+//@Ignore("This is an integration test that needs BPMS running on the local machine")
+ public class KieRemoteComponentTest extends CamelTestSupport {
 
     @Test
-    public void connectsToJBPM() throws Exception {
-        template.sendBody("direct:start", null);
+    public void interactsOverRest() throws Exception {
+        template.sendBody("direct:rest", null);
+    }
+
+    @Test
+    public void interactsOverJMS() throws Exception {
+        template.sendBody("direct:jms", null);
     }
 
     @Override
@@ -36,8 +42,16 @@ public class KieRemoteComponentTest extends CamelTestSupport {
             @Override
             public void configure() {
 
-                from("direct:start")
-                        .to("kie-remote:http://localhost:8080/jbpm-console?userName=test&password=secret&deploymentId=123");
+                from("direct:rest")
+                        .setHeader(KieRemoteConstants.PROCESS_ID, constant("customer.evaluation"))
+                        .to("kie-remote:http://127.0.0.1:8080/business-central?userName=erics&password=bpmsuite&deploymentId=customer:evaluation:1.0")
+                        .to("log:com.ofbizian.jbpm?showAll=true&multiline=true");
+
+
+                from("direct:jms")
+                        .setHeader(KieRemoteConstants.PROCESS_ID, constant("customer.evaluation"))
+                        .to("kie-remote:127.0.0.1:5445?userName=erics&password=bpmsuite&deploymentId=customer:evaluation:1.0&timeout=5")
+                        .to("log:com.ofbizian.jbpm?showAll=true&multiline=true");
             }
         };
     }

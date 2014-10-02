@@ -24,7 +24,6 @@ public interface KieRemoteConstants {
     String PARAMETERS = "CamelKieRemoteParameters";
     String EVENT_TYPE = "CamelKieRemoteEventType";
     String EVENT = "CamelKieRemoteEvent";
-    String PROCESS_NAME = "CamelKieRemoteProcessName";
     String STATE = "CamelKieRemoteState";
     String MAX_NUMBER = "CamelKieRemoteMaxNumber";
     String IDENTIFIER = "CamelKieRemoteIdentifier";
@@ -32,7 +31,7 @@ public interface KieRemoteConstants {
     String TASK_ID = "CamelKieRemoteTaskId";
     String TASK = "CamelKieRemoteTas";
     String USER_ID = "CamelKieRemoteUserId";
-    String TARGET_USER_ID = "CamelKieRemoteTargeUserId";
+    String TARGET_USER_ID = "CamelKieRemoteTargetUserId";
     String LANGUAGE = "CamelKieRemoteLanguage";
     String ATTACHMENT_ID = "CamelKieRemoteAttachmentId";
     String CONTENT_ID = "CamelKieRemoteContentId";

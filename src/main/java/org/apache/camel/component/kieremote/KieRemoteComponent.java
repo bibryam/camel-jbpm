@@ -16,7 +16,7 @@
  */
 package org.apache.camel.component.kieremote;
 
-import java.net.URI;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
@@ -27,8 +27,23 @@ public class KieRemoteComponent extends DefaultComponent {
 
     protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
         KieRemoteConfiguration configuration = new KieRemoteConfiguration();
-        configuration.setConnectionURL(new URL(remaining));
+        setHostAndPort(configuration, remaining);
         setProperties(configuration, parameters);
         return new KieRemoteEndpoint(uri, this, configuration);
+    }
+
+    private void setHostAndPort(KieRemoteConfiguration configuration, String remaining) throws MalformedURLException {
+        if (remaining.startsWith("http")) {
+            URL connectionURL = new URL(remaining);
+            configuration.setConnectionURL(connectionURL);
+        } else {
+            String[] hostAndPort = remaining.split(":");
+            if (hostAndPort.length > 0 && hostAndPort[0].length() > 0) {
+                configuration.setHost(hostAndPort[0]);
+            }
+            if (hostAndPort.length > 1 && hostAndPort[1].length() > 0) {
+                configuration.setPort(Integer.parseInt(hostAndPort[1]));
+            }
+        }
     }
 }
