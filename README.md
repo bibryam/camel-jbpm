@@ -2,9 +2,12 @@ Camel jBPM Component
 ====================
 A Camel component that uses kie-remote-client API for interacting with jBPM over rest or jms.
 
+There is also OSGI features allowing to deploy the component on OSGI container such as Fuse 6.1
+(In OSGI environment the jms connectivity currently doesn't work, it only supports RESTS API).
 
-Supports the following operations:
-============================================
+
+The component supports the following operations:
+================================================
 
 Process operations: *START_PROCESS, ABORT_PROCESS_INSTANCE, SIGNAL_EVENT, GET_PROCESS_INSTANCE, GET_PROCESS_INSTANCES*
 
@@ -18,21 +21,21 @@ GET_TASK_BY_WORK_ITEM_ID, GET_TASK, GET_TASK_CONTENT, GET_TASKS_BY_PROCESS_INSTA
 GET_TASKS_OWNED, NOMINATE_TASK, RELEASE_TASK, RESUME_TASK, SKIP_TASK, RESUME_TASK, START_TASK, STOP_TASK, SUSPEND_TASK*
 
 
-Author
-======
-Bilgin Ibryam  twitter: @bibryam
+Installing the demo module on Fuse 6.1
+======================================
+    fabric:create --wait-for-provisioning
+
+    fabric:profile-edit --repositories mvn:com.ofbizian/camel-jbpm-features/1.1.0/xml/features default
+    fabric:profile-create --parents feature-camel camel-jbpm-demo-profile
+    fabric:profile-edit --features camel-jbpm-demo/1.1.0 camel-jbpm-demo-profile
+    container-create-child --profile camel-jbpm-demo-profile root camel-jbpm-demo-container
 
 
-License
-=======
-ASLv2
-
-
-Example Usage
+Example route
 =============
 
 
-    public class KieRemoteComponentTest extends CamelTestSupport {
+    public class JBPMComponentTest extends CamelTestSupport {
 
         @Test
         public void interactsOverRest() throws Exception {
@@ -51,14 +54,14 @@ Example Usage
                 public void configure() {
 
                     from("direct:rest")
-                            .setHeader(KieRemoteConstants.PROCESS_ID, constant("customer.evaluation"))
-                            .to("kie-remote:http://127.0.0.1:8080/business-central?userName=erics&password=bpmsuite&deploymentId=customer:evaluation:1.0")
+                            .setHeader(JBPMConstants.PROCESS_ID, constant("customer.evaluation"))
+                            .to("jbpm:http://127.0.0.1:8080/business-central?userName=erics&password=bpmsuite&deploymentId=customer:evaluation:1.0")
                             .to("log:com.ofbizian.jbpm?showAll=true&multiline=true");
 
 
                     from("direct:jms")
-                            .setHeader(KieRemoteConstants.PROCESS_ID, constant("customer.evaluation"))
-                            .to("kie-remote:127.0.0.1:5445?userName=erics&password=bpmsuite&deploymentId=customer:evaluation:1.0&timeout=5")
+                            .setHeader(JBPMConstants.PROCESS_ID, constant("customer.evaluation"))
+                            .to("jbpm:127.0.0.1:5445?userName=erics&password=bpmsuite&deploymentId=customer:evaluation:1.0&timeout=5")
                             .to("log:com.ofbizian.jbpm?showAll=true&multiline=true");
                 }
             };
@@ -66,8 +69,11 @@ Example Usage
     }
 
 
+License
+=======
+ASLv2
+
 
 TODO
 ====
 Write unit tests
-

@@ -1,3 +1,10 @@
- .idea
+.idea
 *.iml
 
+component/target
+demo/target
+features/target
+
+component/*.iml
+demo/*.iml
+features/*.iml
