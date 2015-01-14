@@ -24,9 +24,9 @@
         <bundle>mvn:org.jgroups/jgroups/3.5.0.Beta7</bundle>
 
         <bundle>mvn:io.netty/netty/3.6.7.Final</bundle>
-        <bundle>wrap:mvn:org.hornetq/hornetq-jms-client/2.3.18.Final</bundle>
-        <bundle>wrap:mvn:org.hornetq/hornetq-commons/2.3.18.Final</bundle>
-        <bundle>wrap:mvn:org.hornetq/hornetq-core-client/2.3.18.Final</bundle>
+        <bundle>wrap:mvn:org.hornetq/hornetq-jms-client/2.3.19.Final</bundle>
+        <bundle>wrap:mvn:org.hornetq/hornetq-commons/2.3.19.Final</bundle>
+        <bundle>wrap:mvn:org.hornetq/hornetq-core-client/2.3.19.Final</bundle>
 
         <bundle>wrap:mvn:org.jvnet.jaxb2_commons/jaxb2-basics-runtime/0.6.2</bundle>
         <bundle>mvn:org.codehaus.jackson/jackson-jaxrs/1.9.9</bundle>

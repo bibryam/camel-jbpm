@@ -24,10 +24,10 @@ import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.impl.DefaultEndpoint;
 import org.hornetq.jms.client.HornetQQueue;
-import org.kie.services.client.api.RemoteRestRuntimeEngineFactory;
+import org.kie.remote.client.api.RemoteJmsRuntimeEngineBuilder;
+import org.kie.remote.client.api.RemoteJmsRuntimeEngineFactory;
+import org.kie.remote.client.api.RemoteRestRuntimeEngineBuilder;
 import org.kie.services.client.api.RemoteRuntimeEngineFactory;
-import org.kie.services.client.api.builder.RemoteJmsRuntimeEngineBuilder;
-import org.kie.services.client.api.builder.RemoteRestRuntimeEngineBuilder;
 import org.kie.services.client.api.command.RemoteConfiguration;
 import org.kie.services.client.api.command.RemoteRuntimeEngine;
 
@@ -40,7 +40,7 @@ public class JBPMEndpoint extends DefaultEndpoint {
         this.configuration = configuration;
 
         if (configuration.getConnectionURL() != null) {
-            RemoteRestRuntimeEngineBuilder engineBuilder = RemoteRestRuntimeEngineFactory.newRestBuilder();
+            RemoteRestRuntimeEngineBuilder engineBuilder = RemoteRuntimeEngineFactory.newRestBuilder();
 
             if (configuration.getUserName() != null) {
                 engineBuilder.addUserName(configuration.getUserName());
@@ -64,11 +64,11 @@ public class JBPMEndpoint extends DefaultEndpoint {
                 engineBuilder.addExtraJaxbClasses(configuration.getExtraJaxbClasses());
             }
 
-            RemoteRuntimeEngineFactory engineFactory = engineBuilder.buildFactory();
+            org.kie.remote.client.api.RemoteRestRuntimeEngineFactory engineFactory = engineBuilder.buildFactory();
             runtimeEngine = engineFactory.newRuntimeEngine();
 
         } else {
-            RemoteJmsRuntimeEngineBuilder engineBuilder = RemoteRestRuntimeEngineFactory.newJmsBuilder();
+            RemoteJmsRuntimeEngineBuilder engineBuilder = RemoteRuntimeEngineFactory.newJmsBuilder();
 
             if (configuration.getUserName() != null) {
                 engineBuilder.addUserName(configuration.getUserName());
@@ -132,7 +132,7 @@ public class JBPMEndpoint extends DefaultEndpoint {
                 engineBuilder.useKeystoreAsTruststore();
             }
 
-            RemoteRuntimeEngineFactory engineFactory = engineBuilder.buildFactory();
+            RemoteJmsRuntimeEngineFactory engineFactory = engineBuilder.buildFactory();
             runtimeEngine = engineFactory.newRuntimeEngine();
          }
     }
