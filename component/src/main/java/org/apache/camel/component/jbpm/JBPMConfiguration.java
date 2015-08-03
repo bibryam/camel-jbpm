@@ -21,10 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.jms.ConnectionFactory;
-import javax.jms.Queue;
-import javax.naming.InitialContext;
-
 import org.apache.camel.spi.UriParam;
 import org.apache.camel.spi.UriParams;
 import org.kie.api.task.model.OrganizationalEntity;
@@ -50,11 +46,11 @@ public class JBPMConfiguration {
     private Long workItemId;
     private Long taskId;
     private String userId;
-    private Task task;
     private String language;
     private String targetUserId;
     private Long attachmentId;
     private Long contentId;
+    private Task task;
     private List<OrganizationalEntity> entities;
     private List<Status> statuses;
 
@@ -62,23 +58,9 @@ public class JBPMConfiguration {
     private String userName;
     private String password;
     private URL connectionURL;
-    private String host;
-    private Integer port;
     private String deploymentId;
     private Integer timeout;
     private Class[] extraJaxbClasses;
-    private String truststoreLocation;
-    private String truststorePassword;
-    private String keystoreLocation;
-    private String keystorePassword;
-    private boolean useSsl;
-    private boolean useKeystoreAsTruststore;
-    private ConnectionFactory connectionFactory;
-    private String jbossServerHostName;
-    private String sessionQueue;
-    private String responseQueue;
-    private String taskServiceQueue;
-    private InitialContext remoteInitialContext;
 
     public String getOperation() {
         return operation;
@@ -287,117 +269,4 @@ public class JBPMConfiguration {
     public void setExtraJaxbClasses(Class[] extraJaxbClasses) {
         this.extraJaxbClasses = extraJaxbClasses;
     }
-
-    public String getTruststoreLocation() {
-        return truststoreLocation;
-    }
-
-    public void setTruststoreLocation(String truststoreLocation) {
-        this.truststoreLocation = truststoreLocation;
-    }
-
-    public String getTruststorePassword() {
-        return truststorePassword;
-    }
-
-    public void setTruststorePassword(String truststorePassword) {
-        this.truststorePassword = truststorePassword;
-    }
-
-    public String getKeystoreLocation() {
-        return keystoreLocation;
-    }
-
-    public void setKeystoreLocation(String keystoreLocation) {
-        this.keystoreLocation = keystoreLocation;
-    }
-
-    public String getKeystorePassword() {
-        return keystorePassword;
-    }
-
-    public void setKeystorePassword(String keystorePassword) {
-        this.keystorePassword = keystorePassword;
-    }
-
-    public boolean isUseSsl() {
-        return useSsl;
-    }
-
-    public void setUseSsl(boolean useSsl) {
-        this.useSsl = useSsl;
-    }
-
-    public boolean isUseKeystoreAsTruststore() {
-        return useKeystoreAsTruststore;
-    }
-
-    public void setUseKeystoreAsTruststore(boolean useKeystoreAsTruststore) {
-        this.useKeystoreAsTruststore = useKeystoreAsTruststore;
-    }
-
-    public ConnectionFactory getConnectionFactory() {
-        return connectionFactory;
-    }
-
-    public void setConnectionFactory(ConnectionFactory connectionFactory) {
-        this.connectionFactory = connectionFactory;
-    }
-
-    public String getJbossServerHostName() {
-        return jbossServerHostName;
-    }
-
-    public void setJbossServerHostName(String jbossServerHostName) {
-        this.jbossServerHostName = jbossServerHostName;
-    }
-
-    public String getSessionQueue() {
-        return sessionQueue;
-    }
-
-    public void setSessionQueue(String sessionQueue) {
-        this.sessionQueue = sessionQueue;
-    }
-
-    public String getResponseQueue() {
-        return responseQueue;
-    }
-
-    public void setResponseQueue(String responseQueue) {
-        this.responseQueue = responseQueue;
-    }
-
-    public String getTaskServiceQueue() {
-        return taskServiceQueue;
-    }
-
-    public void setTaskServiceQueue(String taskServiceQueue) {
-        this.taskServiceQueue = taskServiceQueue;
-    }
-
-    public InitialContext getRemoteInitialContext() {
-        return remoteInitialContext;
-    }
-
-    public void setRemoteInitialContext(InitialContext remoteInitialContext) {
-        this.remoteInitialContext = remoteInitialContext;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public Integer getPort() {
-        return port;
-    }
-
-    public void setPort(Integer port) {
-        this.port = port;
-    }
 }
-

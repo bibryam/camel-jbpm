@@ -29,7 +29,7 @@ public interface JBPMConstants {
     String IDENTIFIER = "CamelJBPMIdentifier";
     String WORK_ITEM_ID = "CamelJBPMWorkItemId";
     String TASK_ID = "CamelJBPMTaskId";
-    String TASK = "CamelJBPMTas";
+    String TASK = "CamelJBPMTask";
     String USER_ID = "CamelJBPMUserId";
     String TARGET_USER_ID = "CamelJBPMTargetUserId";
     String LANGUAGE = "CamelJBPMLanguage";

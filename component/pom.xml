@@ -23,7 +23,7 @@
     <parent>
         <groupId>com.ofbizian</groupId>
         <artifactId>camel-jbpm</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>camel-jbpm-component</artifactId>
@@ -40,19 +40,23 @@
             <version>${camel.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.servicemix.specs</groupId>
-            <artifactId>org.apache.servicemix.specs.jaxb-api-2.2</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.kie.remote</groupId>
             <artifactId>kie-remote-client</artifactId>
             <version>${kie.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-xjc</artifactId>
-            <version>2.1.13</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hornetq</groupId>
+                    <artifactId>hornetq-core-client</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.hornetq</groupId>
+                    <artifactId>hornetq-jms-client</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jboss.spec.javax.jms</groupId>
+                    <artifactId>jboss-jms-api_1.1_spec</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -76,15 +80,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
@@ -93,9 +88,7 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Export-Service>${camel.osgi.export.service}</Export-Service>
                         <Import-Package>
-                            javax.jms,
-                            javax.naming,
-                            org.apache.camel,
+                            org.apache.camel;version="[2.12,3)",
                             org.apache.camel.impl;version="[2.12,3)",
                             org.apache.camel.spi;version="[2.12,3)",
                             org.apache.camel.util;version="[2.12,3)",
@@ -106,5 +99,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

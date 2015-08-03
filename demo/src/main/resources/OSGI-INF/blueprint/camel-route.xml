@@ -21,7 +21,7 @@
            xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0"
            xsi:schemaLocation="http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
-    <camelContext managementNamePattern="#symbolicName#-#counter#" id="FUSE_BPMS_ROUTE" xmlns="http://camel.apache.org/schema/blueprint">
+    <camelContext  id="FUSE_BPMS_ROUTE" xmlns="http://camel.apache.org/schema/blueprint">
 
         <route id="KIE_ROUTE">
             <from uri="timer://foo?fixedRate=true&amp;period=1000"/>
@@ -31,10 +31,7 @@
             <setHeader headerName="CamelJBPMProcessId">
                 <constant>customer.evaluation</constant>
             </setHeader>
-
-            <!--TODO <to uri="jbpm:127.0.0.1:5445?userName=erics&amp;password=bpmsuite&amp;deploymentId=customer:evaluation:1.0&amp;timeout=5"/>-->
-
-            <to uri="jbpm:http://127.0.0.1:8080/business-central?userName=erics&amp;password=bpmsuite&amp;deploymentId=customer:evaluation:1.0"/>
+            <to uri="jbpm:http://127.0.0.1:8080/business-central?userName=bpmsAdmin&amp;password=pa$word1&amp;deploymentId=customer:evaluation:1.0"/>
 
             <log loggingLevel="INFO" message="jBPM Called"/>
         </route>

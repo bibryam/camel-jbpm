@@ -52,9 +52,12 @@ public class JBPMProducer extends DefaultProducer {
 
     @Override
     protected void doStart() throws Exception {
+        LOGGER.trace("starting producer");
         kieSession = runtimeEngine.getKieSession();
         taskService = runtimeEngine.getTaskService();
         super.doStart();
+        LOGGER.trace("started producer");
+
     }
 
     @Override
@@ -92,7 +95,7 @@ public class JBPMProducer extends DefaultProducer {
             @Override
             void execute(KieSession kieSession, TaskService taskService, JBPMConfiguration configuration, Exchange exchange) {
                 ProcessInstance processInstance = kieSession.startProcess(getProcessId(configuration, exchange), getParameters(configuration, exchange));
-                setProcessInstanceResult(exchange, processInstance);
+                setResult(exchange, processInstance);
             }
         }, ABORT_PROCESS_INSTANCE {
             @Override
@@ -113,7 +116,7 @@ public class JBPMProducer extends DefaultProducer {
             @Override
             void execute(KieSession kieSession, TaskService taskService, JBPMConfiguration configuration, Exchange exchange) {
                 ProcessInstance processInstance = kieSession.getProcessInstance(safe(getProcessInstanceId(configuration, exchange)));
-                setProcessInstanceResult(exchange, processInstance);
+                setResult(exchange, processInstance);
             }
         }, GET_PROCESS_INSTANCES {
             @Override
@@ -260,7 +263,9 @@ public class JBPMProducer extends DefaultProducer {
         }, GET_TASKS_BY_STATUS_BY_PROCESS_INSTANCE_ID {
             @Override
             void execute(KieSession kieSession, TaskService taskService, JBPMConfiguration configuration, Exchange exchange) {
-                List<TaskSummary> taskSummaryList = taskService.getTasksByStatusByProcessInstanceId(safe(getProcessInstanceId(configuration, exchange)), getStatuses(configuration, exchange), getLanguage(configuration, exchange));
+                List<TaskSummary> taskSummaryList = taskService.getTasksByStatusByProcessInstanceId(
+                        safe(getProcessInstanceId(configuration, exchange)), getStatuses(configuration, exchange),
+                        getLanguage(configuration, exchange));
                 setResult(exchange, taskSummaryList);
             }
         }, GET_TASKS_OWNED {
@@ -370,10 +375,6 @@ public class JBPMProducer extends DefaultProducer {
             return userId;
         }
 
-        long safe(Long aLong) {
-            return aLong != null ? aLong : 0;
-        }
-
         Long getTaskId(JBPMConfiguration configuration, Exchange exchange) {
             Long taskId = exchange.getIn().getHeader(JBPMConstants.TASK_ID, Long.class);
             if (taskId == null) {
@@ -458,12 +459,8 @@ public class JBPMProducer extends DefaultProducer {
             return ExchangeHelper.isOutCapable(exchange) ? exchange.getOut() : exchange.getIn();
         }
 
-        void setProcessInstanceResult(Exchange exchange, ProcessInstance processInstance) {
-            if (processInstance != null) {
-                getResultMessage(exchange).setHeader(JBPMConstants.PROCESS_INSTANCE_ID, processInstance.getId());
-                getResultMessage(exchange).setHeader(JBPMConstants.PROCESS_ID, processInstance.getProcessId());
-                getResultMessage(exchange).setHeader(JBPMConstants.STATE, processInstance.getState());
-            }
+        long safe(Long aLong) {
+            return aLong != null ? aLong : 0;
         }
 
         void setResult(Exchange exchange, Object result) {

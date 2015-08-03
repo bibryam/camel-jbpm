@@ -18,13 +18,12 @@
 package org.apache.camel.component.jbpm;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.jbpm.JBPMConstants;
 import org.apache.camel.test.junit4.CamelTestSupport;
+import org.junit.Ignore;
 import org.junit.Test;
 
-
-//@Ignore("This is an integration test that needs BPMS running on the local machine")
- public class JBPMComponentTest extends CamelTestSupport {
+@Ignore("This is an integration test that needs BPMS running on the local machine")
+public class JBPMComponentIntegrationTest extends CamelTestSupport {
 
     @Test
     public void interactsOverRest() throws Exception {
@@ -41,16 +40,9 @@ import org.junit.Test;
         return new RouteBuilder() {
             @Override
             public void configure() {
-
                 from("direct:rest")
                         .setHeader(JBPMConstants.PROCESS_ID, constant("customer.evaluation"))
-                        .to("jbpm:http://127.0.0.1:8080/business-central?userName=erics&password=bpmsuite&deploymentId=customer:evaluation:1.0")
-                        .to("log:com.ofbizian.jbpm?showAll=true&multiline=true");
-
-
-                from("direct:jms")
-                        .setHeader(JBPMConstants.PROCESS_ID, constant("customer.evaluation"))
-                        .to("jbpm:127.0.0.1:5445?userName=erics&password=bpmsuite&deploymentId=customer:evaluation:1.0&timeout=5")
+                        .to("jbpm:http://localhost:8080/business-central?userName=bpmsAdmin&password=pa$word1&deploymentId=customer:evaluation:1.0")
                         .to("log:com.ofbizian.jbpm?showAll=true&multiline=true");
             }
         };

@@ -16,47 +16,22 @@
     limitations under the License.
 -->
 <features name="com.ofbizian">
-    <feature name="camel-jbpm-component" resolver="(obr)" version="${project.version}">
-        <bundle>mvn:org.apache.geronimo.specs/geronimo-jta_1.1_spec/1.1.1</bundle>
-        <bundle>mvn:org.apache.geronimo.specs/geronimo-jms_1.1_spec/1.1.1</bundle>
 
-        <bundle>mvn:org.jboss.logging/jboss-logging/3.1.2.GA</bundle>
-        <bundle>mvn:org.jgroups/jgroups/3.5.0.Beta7</bundle>
+    <feature name='camel-jbpm-component' version='${project.version}' resolver='(obr)' start-level='50'>
+        <bundle dependency='true'>mvn:org.openengsb.wrapped/com.google.protobuf/2.4.1.w1</bundle>
+        <bundle dependency='true'>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.javax-inject/1_2</bundle>
+        <bundle dependency='true'>mvn:org.codehaus.jackson/jackson-jaxrs/1.9.9</bundle>
+        <bundle dependency='true'>mvn:org.codehaus.jackson/jackson-core-asl/1.9.9</bundle>
+        <bundle dependency='true'>mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.9</bundle>
+        <bundle dependency='true'>mvn:org.codehaus.jackson/jackson-xc/1.9.9</bundle>
 
-        <bundle>mvn:io.netty/netty/3.6.7.Final</bundle>
-        <bundle>wrap:mvn:org.hornetq/hornetq-jms-client/2.3.19.Final</bundle>
-        <bundle>wrap:mvn:org.hornetq/hornetq-commons/2.3.19.Final</bundle>
-        <bundle>wrap:mvn:org.hornetq/hornetq-core-client/2.3.19.Final</bundle>
-
-        <bundle>wrap:mvn:org.jvnet.jaxb2_commons/jaxb2-basics-runtime/0.6.2</bundle>
-        <bundle>mvn:org.codehaus.jackson/jackson-jaxrs/1.9.9</bundle>
-        <bundle>mvn:org.codehaus.jackson/jackson-core-asl/1.9.9</bundle>
-        <bundle>mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.9</bundle>
-        <bundle>mvn:org.codehaus.jackson/jackson-xc/1.9.9</bundle>
-        <bundle>mvn:org.openengsb.wrapped/com.google.protobuf/2.4.1.w1</bundle>
-        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.javax-inject/1_2</bundle>
-        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xstream/1.4.7_1</bundle>
-
-        <bundle>mvn:org.mvel/mvel2/2.2.1.Final</bundle>
-        <bundle>wrap:mvn:javax.annotation/jsr250-api/1.0</bundle>
-        
-        <bundle>mvn:javax.ws.rs/javax.ws.rs-api/2.0</bundle>
-
-        <bundle>wrap:mvn:org.jboss.resteasy/jaxrs-api/2.3.7.Final</bundle>
-        <bundle>wrap:mvn:org.jboss.spec.javax.interceptor/jboss-interceptors-api_1.1_spec/1.0.0.Beta1</bundle>
-        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.fastinfoset/1.2.13_1</bundle>
-        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jaxb-xjc/2.1.13_2</bundle>
-        <bundle>mvn:org.apache.geronimo.bundles/jaxb-impl/2.2.3-1_1</bundle>
-
-        <bundle>wrap:mvn:org.kie/kie-api/${kie.version}$DynamicImport-Package=*</bundle>
-        <bundle>mvn:org.drools/drools-core/${kie.version}</bundle>
-        <bundle>mvn:org.drools/drools-compiler/${kie.version}</bundle>
-        <bundle>mvn:org.kie/kie-internal/${kie.version}</bundle>
-
-        <bundle>wrap:mvn:org.kie.remote/kie-remote-jaxb/${kie.version}$DynamicImport-Package=*</bundle>
-        <bundle>wrap:mvn:org.kie.remote/kie-remote-common/${kie.version}</bundle>
-        <bundle>wrap:mvn:org.kie.remote/kie-remote-client/${kie.version}$DynamicImport-Package=*</bundle>
-
+        <bundle dependency='true'>mvn:org.drools/drools-core/${kie.version}</bundle>
+        <bundle dependency='true'>mvn:org.drools/drools-compiler/${kie.version}</bundle>
+        <bundle dependency='true'>wrap:mvn:org.kie/kie-internal/${kie.version}</bundle>
+        <bundle dependency='true'>wrap:mvn:org.kie/kie-api/${kie.version}</bundle>
+        <bundle dependency='true'>wrap:mvn:org.kie.remote/kie-remote-common/${kie.version}</bundle>
+        <bundle dependency='true'>wrap:mvn:org.kie.remote/kie-remote-jaxb/${kie.version}</bundle>
+        <bundle dependency='true'>wrap:mvn:org.kie.remote/kie-remote-client/${kie.version}</bundle>
         <bundle>mvn:com.ofbizian/camel-jbpm-component/${project.version}</bundle>
     </feature>
 
