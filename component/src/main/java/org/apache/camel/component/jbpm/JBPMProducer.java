@@ -25,6 +25,7 @@ import org.apache.camel.Message;
 import org.apache.camel.impl.DefaultProducer;
 import org.apache.camel.util.ExchangeHelper;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.TaskService;
 import org.kie.api.task.model.Attachment;
@@ -42,9 +43,9 @@ public class JBPMProducer extends DefaultProducer {
     private KieSession kieSession;
     private TaskService taskService;
     private JBPMConfiguration configuration;
-    private RemoteRuntimeEngine runtimeEngine;
+    private RuntimeEngine runtimeEngine;
 
-    public JBPMProducer(JBPMEndpoint endpoint, RemoteRuntimeEngine runtimeEngine) {
+    public JBPMProducer(JBPMEndpoint endpoint, RuntimeEngine runtimeEngine) {
         super(endpoint);
         this.configuration = endpoint.getConfiguration();
         this.runtimeEngine = runtimeEngine;

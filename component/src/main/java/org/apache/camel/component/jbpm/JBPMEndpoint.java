@@ -23,6 +23,7 @@ import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.impl.DefaultEndpoint;
+import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.remote.client.api.RemoteRestRuntimeEngineBuilder;
 import org.kie.services.client.api.RemoteRuntimeEngineFactory;
 import org.kie.services.client.api.command.RemoteRuntimeEngine;
@@ -33,7 +34,7 @@ public class JBPMEndpoint extends DefaultEndpoint {
     private static final transient Logger LOGGER = LoggerFactory.getLogger(JBPMEndpoint.class);
 
     private final JBPMConfiguration configuration;
-    private RemoteRuntimeEngine runtimeEngine;
+    private RuntimeEngine runtimeEngine;
 
     public JBPMEndpoint(String uri, JBPMComponent component, JBPMConfiguration configuration) throws URISyntaxException, MalformedURLException {
         super(uri, component);
@@ -62,7 +63,7 @@ public class JBPMEndpoint extends DefaultEndpoint {
         if (configuration.getExtraJaxbClasses() != null) {
             engineBuilder.addExtraJaxbClasses(configuration.getExtraJaxbClasses());
         }
-        runtimeEngine = engineBuilder.buildFactory().newRuntimeEngine();
+        runtimeEngine = engineBuilder.build();
         LOGGER.trace("creating endpoint done");
 
     }
