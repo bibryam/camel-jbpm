@@ -30,11 +30,6 @@ public class JBPMComponentIntegrationTest extends CamelTestSupport {
         template.sendBody("direct:rest", null);
     }
 
-    @Test
-    public void interactsOverJMS() throws Exception {
-        template.sendBody("direct:jms", null);
-    }
-
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new RouteBuilder() {

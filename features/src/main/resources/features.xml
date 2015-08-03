@@ -24,6 +24,7 @@
         <bundle dependency='true'>mvn:org.codehaus.jackson/jackson-core-asl/1.9.9</bundle>
         <bundle dependency='true'>mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.9</bundle>
         <bundle dependency='true'>mvn:org.codehaus.jackson/jackson-xc/1.9.9</bundle>
+        <bundle dependency='true'>mvn:org.apache.geronimo.specs/geronimo-jms_1.1_spec/1.1.1</bundle>
 
         <bundle dependency='true'>mvn:org.drools/drools-core/${kie.version}</bundle>
         <bundle dependency='true'>mvn:org.drools/drools-compiler/${kie.version}</bundle>
