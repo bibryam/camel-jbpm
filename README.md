@@ -23,7 +23,7 @@ GET_TASKS_OWNED, NOMINATE_TASK, RELEASE_TASK, RESUME_TASK, SKIP_TASK, RESUME_TAS
 Running the demo on Fuse 6.2 (or 6.1)
 =====================================
   
-Start BPMS using [Docker image](https://github.com/bibryam/dockerfiles/tree/master/eap-bpms) and [clone](https://github.com/bibryam/bpmsuite-customer-evaluation-repo.git) a jbpm process, build and deploy it. Then deploy the demo feature to Fuse and it will start creating process instances.
+Start BPMS using [Docker image](https://github.com/bibryam/dockerfiles/tree/master/eap-bpms) and clone a [jbpm process](https://github.com/bibryam/bpmsuite-customer-evaluation-repo.git), build and deploy it. Then deploy the demo feature to Fuse and it will start creating process instances.
 
     JBossFuse:admin@root> features:addurl mvn:com.ofbizian/camel-jbpm-features/1.0.0/xml/features 
     JBossFuse:admin@root> features:install camel-jbpm-demo/1.0.0

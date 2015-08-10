@@ -17,6 +17,11 @@
 
 package org.apache.camel.component.jbpm;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import customer.evaluation.Person;
+import customer.evaluation.Request;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Ignore;
@@ -33,10 +38,23 @@ public class JBPMComponentIntegrationTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new RouteBuilder() {
+
             @Override
             public void configure() {
+                Request request = new Request("1");
+                request.setPersonId("Demo");
+                request.setAmount(5000);
+
+                Person person = new Person("Demo", "User");
+                person.setAge(19);
+
+                Map map = new HashMap();
+                map.put("request", request);
+                map.put("person", person);
+
                 from("direct:rest")
                         .setHeader(JBPMConstants.PROCESS_ID, constant("customer.evaluation"))
+                        .setHeader(JBPMConstants.PARAMETERS, constant(map))
                         .to("jbpm:http://localhost:8080/business-central?userName=bpmsAdmin&password=pa$word1&deploymentId=customer:evaluation:1.0")
                         .to("log:com.ofbizian.jbpm?showAll=true&multiline=true");
             }
