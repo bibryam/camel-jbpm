@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ofbizian</groupId>
+        <artifactId>camel-jbpm</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <version>1.0.0</version>
+    <artifactId>process</artifactId>
+
+    <repositories>
+        <repository>
+            <id>guvnor-m2-repo</id>
+            <name>Guvnor M2 Repo</name>
+            <url>http://localhost:8080/business-central/maven2/</url>
+        </repository>
+    </repositories>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.kie</groupId>
+                <artifactId>kie-maven-plugin</artifactId>
+                <version>${kie.version}</version>
+                <extensions>true</extensions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
