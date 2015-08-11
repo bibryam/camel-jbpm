@@ -32,7 +32,6 @@
         <module>component</module>
         <module>features</module>
         <module>demo</module>
-        <module>process</module>
     </modules>
 
     <properties>
